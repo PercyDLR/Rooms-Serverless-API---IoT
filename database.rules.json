@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "usuarios": {
+      ".read": true,
+      ".indexOn": ["nombre","correo", "ti"],
+      "$uid": {
+    		".write": "$uid === auth.uid || root.child('/usuarios/'+auth.uid+'/rol').val() === 'admin'"
+      }
+    },
+    "espacios": {
+      ".read": "auth != null",
+      ".write": "(root.child('/usuarios/'+auth.uid+'/rol').val() === 'usuario' && data.exists()) || root.child('/usuarios/'+auth.uid+'/rol').val() === 'admin'",
+        ".indexOn": "nombre"
+    }
+  }
+}
